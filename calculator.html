@@ -318,8 +318,10 @@
             let offX, offY;
             let widget = false;
 
+            // 계산기 여는 코드
             document.querySelector("#oCalc").onmouseup = () => {
                 document.querySelector("#oCalc").children[1].style.visibility = "visible";
+                //열때 애니메이션 제공
                 document.querySelector("#oCalc").style.animation = 'appOpen .6s ease-in-out';
                 open();
             };
@@ -330,6 +332,7 @@
                 a.firstChild.nextSibling.addEventListener('mouseup', (e1) => {e.style.visibility = "hidden"; focus.innerText = 'Finder';});
             });
 
+            // 상단바에 텍스트 변경
             document.addEventListener('mousedown', (e) => {
                 mousePressed = true;
                 if(getApplicationNode(e.target)) {
@@ -337,6 +340,7 @@
                 }else focus.innerText = 'Finder';
             });
 
+            // 상단바 날짜 클릭시 위젯 오픈
             document.addEventListener('mouseup', (e) => {
                 mousePressed = false;
                 offX = undefined;
@@ -356,10 +360,12 @@
 
 
             document.addEventListener('mousemove', (e) => {
+                //만약 애플리케이션을 클릭중이라면
                 if(mousePressed && getApplicationNode(e.target) && e.clientY-getApplicationNode(e.target).offsetTop <= 27) {
                     let a = getApplicationNode(e.target);
                     
                     if(!offX && !offY) {
+                        // 애플리케이션 내부 포인터의 x, y
                         offX = e.clientX - a.offsetLeft;
                         offY = e.clientY - a.offsetTop;
                     }
@@ -392,9 +398,11 @@
             function press(action) {
                 console.log(action);
                 if(action==="sw") {
+                    // +/- 변경
                     if(num ==- 0) result = -result;
                     else num = -num;
                 }else if(action==="c") {
+                    // backspace
                     let a = (num!==0?num:result).toString();
                     a = a.length-1<=0? '0' : a.substring(0, a.length-1);
                     if(a.charAt(a.length)=='.') a = substring(0, a.length);
@@ -423,6 +431,7 @@
                 update();
             }
 
+            // 계산 (eval 사용 X)
             function calc(operation) {
                 switch(operation) {
                     case "+": result += num; break;
