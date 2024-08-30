@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>10517정은수</title>
+        <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+        <style>
+            * {
+                font-family: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
+            }
+
+            body {
+                margin: 0;
+                width: 100vw;
+                height: 100vh;
+                overflow: hidden;
+                background-repeat: no-repeat;
+                background-size: cover;
+                background-image: url(https://r4.wallpaperflare.com/wallpaper/743/153/113/fire-4k-hd-full-screen-wallpaper-68161dd870004c38d0bce12e685234ea.jpg);
+            }
+
+            .application {
+                border-radius: .5rem;
+                backdrop-filter: blur(1rem);
+            }
+
+            .application > .contents {
+                position: relative;
+                width: 100%;
+                height: calc(100% - 1.4rem - 1%);
+            }
+
+            .application > .manage {
+                box-sizing: border-box;
+                width: 100%;
+                padding: 1%;
+            }
+
+            .application > .manage > span {
+                margin: 0 .2rem;
+                display: inline-block;
+                width: .7rem;
+                height: .7rem;
+                border-radius: 50%;
+            }
+
+            .application > .manage > span:nth-child(1) {
+                background-color: red;
+            }
+
+            .application > .manage > span:nth-child(2) {
+                background-color: yellow;
+            }
+
+            .application > .manage > span:nth-child(3) {
+                background-color: lime;
+            }
+            #topBar {
+                display: flex;
+                background-color: #eaeaea;
+                padding: .3rem;
+                align-items: center;
+                align-content: center;
+                gap: .5rem;
+            }
+
+            #topBar > span:active {
+                background-color: #bebebe;
+            }
+
+            #topBar > span {
+                border-radius: .2rem;
+                width: fit-content;
+                padding: .5% 0.5%;
+                font-size: .8rem;
+            }
+
+            #topBar > span:nth-child(2) {
+                font-weight: 700;
+            }
+
+            #topBar > .right {
+                position: absolute;
+                right: .5rem;
+            }
+            #widget {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                grid-template-rows: 10rem;
+                gap: .5rem;
+                position: absolute;
+                right: .5rem;
+                width: 20rem;
+                padding: 1rem ;
+                filter: drop-shadow(0 0 0.75rem rgba(255, 255, 255, 1));
+                transform: translateX(110%);
+                z-index: 99;
+            }
+            #widget > div {
+                border-radius: 1rem;
+                padding: 1rem;
+            }
+            #widget > div > * {
+                margin: 0;
+            }
+            #widTime {
+                background-color: #2e2e2e;
+                color: white;
+            }
+            #widTime > * {
+                margin: 0;
+            }
+            #widTime > p {
+                font-size: .8rem;
+            }
+            #widget > * > h1 {
+                font-weight: 200;
+                font-size: 2.5rem;
+            }
+            #widWe {
+                position: relative;
+                color: white;
+                background: linear-gradient(#152085 0%, #6471d8 40%, #bec6ff 100%);
+            }
+            #detail {
+                position: absolute;
+                bottom: 1rem;
+                font-size: .8rem;
+            }
+            @keyframes widget {
+                0% {
+                    transform: translateX(110%);
+                }
+
+                100% {
+                    transform: translateX(0%);
+                }
+            }
+
+            @keyframes widgetR {
+                0% {
+                    transform: translateX(0%);
+                }
+
+                100% {
+                    transform: translateX(110%);
+                }
+            }
+
+            #dock {
+                position: absolute;
+                width: 70%;
+                height: 5rem;
+                left: 50%;
+                transform: translateX(-50%);
+                bottom: 0;
+                border: .1rem solid rgba(255,255,255, 0.1);
+                border-radius: 1rem;
+                backdrop-filter: blur(1rem);
+            }
+
+            #dock > div {
+                display: flex;
+                flex-flow: column;
+                align-content: center;
+                align-items: center;
+                justify-content: space-between;
+                box-sizing: border-box;
+                padding: .5rem;
+                width: 5rem;
+                height: 5rem;
+            }
+
+            #dock > div > span {
+                display: inline-block;
+                width: .2rem;
+                height: .2rem;
+                background-color: rgb(182, 182, 182);
+                border-radius: 50%;
+                visibility: hidden;
+            }
+
+            @keyframes appOpen {
+                0% {
+                    transform: translateY(0%);
+                }
+                50% {
+                    transform: translateY(-20%);
+                }
+                100% {
+                    transform: translateY(0%);
+                }
+            }
+        </style>
+        <style>
+            #calculator {
+                position: absolute;
+                top: 30%;
+                left: 30%;
+                background-color: rgba(42, 42, 42, 0.6);
+                border: solid .1rem rgba(108, 108, 108, 0.6);
+                width: 16rem;
+                height: 21rem;
+                color: white;
+            }
+
+            #calculator > .contents > span {
+                display: inline-block;
+                box-sizing: border-box;
+                padding: 0 5%;
+                font-size: 3rem;
+                text-align: right;
+                width: 100%;
+                font-weight: 200;
+            }
+
+            #keys {
+                display: grid;
+                height: calc(100% - 3.5rem);
+                grid-template-columns: 1fr 1fr 1fr 1fr;
+            }
+
+            #keys > * {
+                outline: none;
+                border: none;
+                color: white;
+                border: 1px solid rgba(0,0,0, 0.2);
+                font-size: 1.5rem;
+            }
+
+            #keys > button:nth-child(-n + 3) {
+                background-color: rgba(255,255,255, 0.05);
+            }
+
+            #keys > button:nth-child(n + 4) {
+                background-color: rgba(255, 255, 255, 0.15);
+            }
+
+            #keys > button:nth-child(4n), #keys > button:last-child {
+                background-color: orange;
+            }
+
+            #keys > button:last-child {
+                border-radius: 0 0 .5rem 0;
+            }
+
+            #oCalc > img {
+                width: 3.5rem;
+                height: 3.5rem;
+            }
+
+            #oCalc::before {
+                position: absolute;
+                transform: translateY(-2.8rem);
+                background-color: rgba(75, 75, 75, 0.2);
+                border: .1rem solid rgba(255,255,255, 0.1);
+                border-radius: .5rem;
+                padding: .2rem .7rem;
+                color: white;
+            }
+
+            #oCalc:hover::before {
+                content: '계산기';
+            }
+        </style>
+    </head>
+    <body>
+        <div id="topBar">
+            <span>★</span>
+            <span>Finder</span>
+            <span id="time" class="right">로드중</span>
+        </div>
+        <div id="widget">
+            <div id="widTime">
+                <p></p>
+                <h1>30</h1>
+                <p style="margin-top: 1rem; font-size: .7rem;color: #bebebe;">오늘 이벤트 없음</p>
+            </div>
+            <div id="widWe">
+                <p>서울특별시 <i class="bi bi-cursor-fill"></i></p>
+                <h1>29˚</h1>
+                <div id="detail">
+                    <span style="color: yellow;"><i class="bi bi-brightness-high-fill"></i></span><br/>
+                    <span>대체로 맑음</span><br/>
+                    <span>최고: 33˚ 최저: 23˚</span>
+                </div>
+            </div>
+        </div>
+
+        <div id="calculator" class="application" style="visibility: hidden;">
+            <div class="manage"><span></span><span></span><span></span></div>
+            <div class="contents">
+                <span id="result">0</span>
+                <div id="keys">
+                    <button onclick="press('c')">C</button><button onclick="press('sw')">+/-</button><button onclick="press('%')">%</button><button onclick="press('/')">÷</button>
+                    <button onclick="press('7')">7</button><button onclick="press('8')">8</button><button onclick="press('9')">9</button><button onclick="press('*')">×</button>
+                    <button onclick="press('4')">4</button><button onclick="press('5')">5</button><button onclick="press('6')">6</button><button onclick="press('-')">-</button>
+                    <button onclick="press('1')">1</button><button onclick="press('2')">2</button><button onclick="press('3')">3</button><button onclick="press('+')">+</button>
+                    <button style="grid-column: 1/3; border-radius: 0 0 0 .5rem;" onclick="press('0')">0</button><button onclick="press('.')">.</button><button class="eq" onclick="press('=')">=</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="dock">
+            <div id="oCalc">
+                <img src="https://help.apple.com/assets/63FD49E28D6264536445EC7D/63FD49E28D6264536445EC84/en_US/f19c7e914f0adb59c0833d00d09f1ea7.png" alt="calculator"/>
+                <span></span>
+            </div>
+        </div>
+
+        <script>
+            const applications = document.querySelectorAll(".application");
+            const wid = document.querySelector("#widget");
+            const focus = document.querySelector("#topBar").children[1];
+            let mousePressed = false;
+            let offX, offY;
+            let widget = false;
+
+            document.querySelector("#oCalc").onmouseup = () => {
+                document.querySelector("#oCalc").children[1].style.visibility = "visible";
+                document.querySelector("#oCalc").style.animation = 'appOpen .6s ease-in-out';
+                open();
+            };
+
+            applications.forEach(e => {
+                let a = e.getElementsByClassName("manage")[0];
+                a.firstChild.addEventListener('mouseup', (e1) => {e.style.visibility = "hidden"; focus.innerText = 'Finder'; document.querySelector("#oCalc").children[1].style.visibility = "hidden"; document.querySelector("#oCalc").style.animation = "";});
+                a.firstChild.nextSibling.addEventListener('mouseup', (e1) => {e.style.visibility = "hidden"; focus.innerText = 'Finder';});
+            });
+
+            document.addEventListener('mousedown', (e) => {
+                mousePressed = true;
+                if(getApplicationNode(e.target)) {
+                    focus.innerText = '계산기';
+                }else focus.innerText = 'Finder';
+            });
+
+            document.addEventListener('mouseup', (e) => {
+                mousePressed = false;
+                offX = undefined;
+                offY = undefined;
+
+                if(e.target.id === 'time') {
+                    if(!widget) {
+                        wid.style.animation = 'widget .4s forwards ease-in-out';
+                    }else {
+                        wid.style.animation = 'widgetR .4s forwards ease-in-out';
+                    }
+                    console.log(wid.style.animation);
+
+                    widget = !widget;
+                }
+            })
+
+
+            document.addEventListener('mousemove', (e) => {
+                if(mousePressed && getApplicationNode(e.target) && e.clientY-getApplicationNode(e.target).offsetTop <= 27) {
+                    let a = getApplicationNode(e.target);
+                    
+                    if(!offX && !offY) {
+                        offX = e.clientX - a.offsetLeft;
+                        offY = e.clientY - a.offsetTop;
+                    }
+                    a.style.top = (e.clientY-offY)+"px";
+                    a.style.left = (e.clientX-offX)+"px";
+                }
+            });
+
+            function getApplicationNode(node) {
+                if(!node) return undefined;
+
+                let a = node.parentNode;
+                if(!a) return undefined;
+                if(a.classList && a.classList.contains("application")) {
+                    return a;
+                }else return getApplicationNode(a);
+            }
+
+            function open() {
+                applications[0].style.visibility = 'visible';
+            }            
+        </script>
+        <script>
+            let result = 0;
+            let num = 0;
+            let operation = "+";
+            let dot = false;
+            const re =  document.querySelector("#result");
+
+            function press(action) {
+                console.log(action);
+                if(action==="sw") {
+                    if(num ==- 0) result = -result;
+                    else num = -num;
+                }else if(action==="c") {
+                    let a = (num!==0?num:result).toString();
+                    a = a.length-1<=0? '0' : a.substring(0, a.length-1);
+                    if(a.charAt(a.length)=='.') a = substring(0, a.length);
+                    if(num!==0) num = parseFloat(a);
+                    else result = parseFloat(a);
+                }else if(47 < action.charCodeAt(0) && action.charCodeAt(0) < 58) {
+                    let a = num.toString();
+                    let d = a.lastIndexOf(".");
+                    if(dot) {
+                        num += charToNum(action.charCodeAt(0))/(10**(d!=-1?a.length-d:1));
+                    }else {
+                        num = num*10 + charToNum(action.charCodeAt(0));
+                    }
+                }else {
+                    if(action !== "." && num !== 0) {
+                        calc(operation.charAt(0));
+                    }else if(action === "." && num === 0 && result !== 0) {
+                        num = result;
+                        result = 0;
+                    }
+                    if(action === ".") dot = true;
+                    else if (action !== "=") operation = action.charAt(0);
+                    else if(action === "=") operation = "+";
+                }
+                console.log(result + operation +num);                
+                update();
+            }
+
+            function calc(operation) {
+                switch(operation) {
+                    case "+": result += num; break;
+                    case "-": result -= num; break;
+                    case "/": result /= num; break;
+                    case "*": result *= num; break;
+                    case "%": result %= num; break;
+                }
+                operation = "+";
+                dot = false;
+                num = 0;
+            }
+
+            function update() {
+                re.innerText = num===0?result:num;
+            }
+
+            function charToNum(c) {
+                return c-48;
+            }
+
+            function updateTime() {
+                let date = new Date();
+                let options = {  
+                    weekday: "short", month: "short",  
+                    day: "numeric", hour: "2-digit", minute: "2-digit"  
+                };
+                document.querySelector("#widTime").children[0].innerText = date.toLocaleDateString("ko-kr", {weekday: "long"})
+                document.querySelector("#time").innerText = date.toLocaleTimeString("ko-kr", options);
+            }
+
+            setInterval(updateTime, 10000);
+
+            updateTime();
+        </script>
+    </body>
+</html>
